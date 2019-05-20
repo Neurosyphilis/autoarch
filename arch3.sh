@@ -8,9 +8,8 @@ mount /dev/sda3 /mnt
 mkdir /mnt/boot /mnt/home /mnt/var
 mount /dev/sda1 /mnt/boot
 vim /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel
-pacstrap /mnt grub-bios
-genfstab -p /mnt >> /mnt/etc/fstab
+pacstrap /mnt base base-devel grub-bios
+genfstab -U -p /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 hwclock --systohc --utc
 mkinitcpio -p linux
