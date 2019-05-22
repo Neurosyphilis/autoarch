@@ -9,16 +9,18 @@ mkdir /mnt/boot /mnt/home /mnt/var
 mount /dev/sda1 /mnt/boot
 vim /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel grub-bios
-genfstab -p /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 hwclock --systohc --utc
-mkinitcpio -p linux
 passwd root
 read -p "Username : " username
+read -p "Hostname : " hostname
 useradd -mg users -G wheel -s /bin/bash $username
 passwd $username
 grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 vim /etc/sudoers
+hostnamectl set-hostname $hostname
+systemctl enable dhcpcd
 exit
 sudo reboot now
